@@ -1,0 +1,50 @@
+<?php
+/**
+ * @file
+ * Provide tests.
+ *
+ * @author  Jeremy Sullivan ("jersu", http://drupal.org/user/47878)
+ */
+
+class TwilioAPIUnitTest extends DrupalUnitTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => 'Twilio API',
+      'description' => 'Ensure that Twilio API libraries integration and configuration work properly.',
+      'group' => 'Twilio API',
+    );
+  }
+
+
+  /**
+   * Ensure that Twilio API libraries integration and configuration work properly.
+   */
+  function testLibrary() {
+    // Set Twilio API setting for checking later.
+    global $conf;
+    $conf['twilioapi_account_sid'] = 'AC123';
+    $conf['twilio_auth_token'] = '123';
+
+    // Ensure the requirements check out properly and configuration settings
+    // were success loaded since twilioapi_requirements() checks for them.
+    require_once 'includes/install.inc';
+    $requirements = twilioapi_requirements('runtime');
+    if (!$this->assertEqual($requirements['twilioapi']['severity'], REQUIREMENT_OK, 'Twilio API for PHP library loaded and compatible.')) {
+      return;
+    }
+/*
+    // Ensure the version detection pattern works.
+    $info = libraries_load('twilio');
+    $this->assertTrue($info['version'], 'Version detected (' . $info['version'] . ').');
+
+    // Ensure that the integration file was loaded.
+    $this->assertTrue(class_exists('Services_Twilio'), 'Library integration file Twilio.php loaded.');
+
+    // Ensure that the configuration was merged with the defaults and loaded.
+    $config = twilioapi_config_load();
+    $this->assertEqual($config['account_sid'], $conf['twilioapi_account_sid'], 'Configured setting for Account SID overwrote default setting.');
+    $this->assertEqual($config['auth_token'], $conf['twilioapi_auth_token'], 'Configured setting for Auth Token overwrote default setting.');    
+*/
+  }
+  
+}

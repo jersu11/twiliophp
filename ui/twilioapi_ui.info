@@ -1,0 +1,8 @@
+name = Twilio API for PHP UI
+description = The Twilio API for PHP configuration UI.
+package = Libraries
+core = 7.x
+configure = admin/config/media/twilioapi
+dependencies[] = twilioapi
+files[] = twilioapi_ui.test
+

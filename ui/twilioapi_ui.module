@@ -1,0 +1,59 @@
+<?php
+/**
+ * @file
+ * Provides primary Drupal hook implementations.
+ *
+ * @author  Jeremy Sullivan ("jersu", http://drupal.org/user/47878)
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function twilioapi_ui_menu() {
+  $items = array();
+
+  $items['admin/config/services/twilioapi'] = array(
+    'title' => 'Twilio API for PHP',
+    'description' => 'Configure the Twilio API settings.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('twilioapi_ui_settings_form'),
+    'access arguments' => array('access administration pages'),
+  );
+
+  return $items;
+}
+
+/**
+ * Settings form.
+ */
+function twilioapi_ui_settings_form($form, &$form_state) {
+  $form['required'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Required'),
+    '#description' => t('The following fields are required by Twilio, but may be passed directly to the constructors instead.') .' ['. l(t('Twilio user account page'), 'https://www.twilio.com/user/account') .']',
+  );
+  $form['required']['twilioapi_account_sid'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Twilio Account SID'),
+    '#default_value' => variable_get('twilioapi_account_sid', ''),
+    '#required' => TRUE,
+    '#description' => t('Twilio Account SID. Found on your user account page.'),
+  );
+  $form['required']['twilioapi_auth_token'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Twilio Auth Token'),
+    '#default_value' => variable_get('twilioapi_auth_token', ''),
+    '#required' => TRUE,
+    '#description' => t('Twilio Auth Token. Found on your user account page'),
+  );
+
+  $form['#submit'][] = 'twilioapi_ui_settings_form_submit';
+  return system_settings_form($form);
+}
+
+/**
+ * Clear config cache to new settings take effect.
+ */
+function twilioapi_ui_settings_form_submit($form, &$form_state) {
+  cache_clear_all('twilioapi_config_load', 'cache');
+}

@@ -1,0 +1,22 @@
+<?php
+/**
+ * @file
+ * Provides installation functions.
+ *
+ * @author Jeremy Sullivan ("jersu", http://drupal.org/user/47878)
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function twilioapi_uninstall() {
+  // Remove all variables.
+  $results = db_select('variable', 'v')
+    ->fields('v', array('name'))
+    ->condition('name', 'twilioapi%', 'LIKE')
+    ->execute();
+  foreach ($results as $result) {
+    variable_del($result->name);
+  }
+}
+

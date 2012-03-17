@@ -1,0 +1,7 @@
+name = Twilio API for PHP
+description = The Twilio API for PHP provides a library, code samples, and documentation for developers.
+package = Libraries
+core = 7.x
+dependencies[] = libraries (2.0-alpha2)
+files[] = twilioapi.test
+
