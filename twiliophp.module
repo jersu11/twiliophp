@@ -9,20 +9,20 @@
 /**
  * Denotes "Twilio API for PHP" minimum version number.
  */
-define('TWILIOAPI_MINIMUM_VERSION', '3.2');
+define('twiliophp_MINIMUM_VERSION', '3.2');
 
 /**
  * Implements hook_libraries_info()
  */
-function twilioapi_libraries_info() {
+function twiliophp_libraries_info() {
   return array(
-    'twilio' => array(
+    'twilio-php' => array(
       'title' => 'Twilio API for PHP',
-      'vendor url' => 'https://github.com/twilio/twilio-php',
-      'download url' => 'https://github.com/twilio/twilio-php',
+      'vendor url' => 'https://github.com/twilio/twiliophp',
+      'download url' => 'https://github.com/twilio/twiliophp',
       'version arguments' => array(
         'file' => 'Services/Twilio.php',
-        'pattern' => "/const USER_AGENT = 'twilio-php\/(.*)';/",
+        'pattern' => "/const USER_AGENT = 'twiliophp\/(.*)';/",
         'lines' => 50,
       ),
       'files' => array(
@@ -37,7 +37,7 @@ function twilioapi_libraries_info() {
 /**
  * Implements hook_requirements()
  */
-function twilioapi_requirements($phase) {
+function twiliophp_requirements($phase) {
   $t = get_t();
   $requirements = array();
 
@@ -46,17 +46,17 @@ function twilioapi_requirements($phase) {
     return $requirements;
   }
 
-  $info = libraries_load('twilio');
+  $info = libraries_load('twilio-php');
   if (!$info['loaded']) {
-    $requirements['twilioapi'] = array(
+    $requirements['twiliophp'] = array(
       'severity' => REQUIREMENT_ERROR,
       'title' => $t('Twilio API'),
       'value' => $t('Failed to load the Twilio API'),
       'description' => $t('Please make sure the Twilio API for PHP library is installed in the libraries directory. Use the drush make file for easy installation.'),
     );
   }
-  else if(!$info['version'] || version_compare($info['version'], TWILIOAPI_MINIMUM_VERSION) <= 0) {
-    $requirements['twilioapi'] = array(
+  else if(!$info['version'] || version_compare($info['version'], twiliophp_MINIMUM_VERSION) <= 0) {
+    $requirements['twiliophp'] = array(
       'severity' => REQUIREMENT_ERROR,
       'title' => $t('Twilio API'),
       'value' => $info['version'],
@@ -65,7 +65,7 @@ function twilioapi_requirements($phase) {
   }
   else {
     global $base_url;
-    $requirements['twilioapi'] = array(
+    $requirements['twiliophp'] = array(
       'severity' => REQUIREMENT_OK,
       'title' => $t('Twilio API'),
       'value' => $info['version'],
@@ -74,14 +74,14 @@ function twilioapi_requirements($phase) {
     // Only proceed if unable to check compatibility or compatible.
     if (!isset($compatible) || $compatible) {
       // Ensure that the two required credentials have been set.
-      $creds = twilioapi_config_load();
+      $creds = twiliophp_config_load();
       if (!isset($creds['account_sid']) || !isset($creds['auth_token'])) {
-        $requirements['twilioapi']['severity'] = REQUIREMENT_ERROR;
-        $requirements['twilioapi']['description'] = $t('The required Twilio API credentials (account id and auth token) have not been set.');
+        $requirements['twiliophp']['severity'] = REQUIREMENT_ERROR;
+        $requirements['twiliophp']['description'] = $t('The required Twilio API credentials (account id and auth token) have not been set.');
 
         // Add link to configuration form if ui is enabled.
-        if (module_exists('twilioapi_ui')) {
-          $requirements['twilioapi']['description'] .= ' [' . l(t('configuration'), 'admin/config/media/twilioapi') . ']';
+        if (module_exists('twiliophp_ui')) {
+          $requirements['twiliophp']['description'] .= ' [' . l(t('configuration'), 'admin/config/media/twiliophp') . ']';
         }
       }
     }
@@ -91,26 +91,25 @@ function twilioapi_requirements($phase) {
 }
 
 /**
- * Load the default twilioapi settings and apply variable overrides.
+ * Load the default twiliophp settings and apply variable overrides.
  *
  * @return
- *   An associative array containing twilioapi setting values.
+ *   An associative array containing twiliophp setting values.
  */
-function twilioapi_config_load() {
+function twiliophp_config_load() {
   if (!($config = &drupal_static(__FUNCTION__))) {
     $config = ($cache = cache_get(__FUNCTION__)) ? $cache->data : array();
   }
 
   if (!$config) {
     $keys = array(
-      // Required keys.
       'account_sid',
       'auth_token'
     );
 
     // Look for variables for each key and pull in the values.
     foreach ($keys as $key) {
-      if (($value = variable_get('twilioapi_' . $key)) !== NULL) {
+      if (($value = variable_get('twiliophp_' . $key)) !== NULL) {
         $config[$key] = $value;
       }
     }

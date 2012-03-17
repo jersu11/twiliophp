@@ -9,11 +9,11 @@
 /**
  * Implements hook_uninstall().
  */
-function twilioapi_uninstall() {
+function twiliophp_uninstall() {
   // Remove all variables.
   $results = db_select('variable', 'v')
     ->fields('v', array('name'))
-    ->condition('name', 'twilioapi%', 'LIKE')
+    ->condition('name', 'twiliophp%', 'LIKE')
     ->execute();
   foreach ($results as $result) {
     variable_del($result->name);
