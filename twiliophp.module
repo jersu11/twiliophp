@@ -9,7 +9,7 @@
 /**
  * Denotes "Twilio API for PHP" minimum version number.
  */
-define('twiliophp_MINIMUM_VERSION', '3.2');
+define('TWILIO_MINIMUM_VERSION', '3.2');
 
 /**
  * Implements hook_libraries_info()
@@ -18,11 +18,11 @@ function twiliophp_libraries_info() {
   return array(
     'twilio-php' => array(
       'title' => 'Twilio API for PHP',
-      'vendor url' => 'https://github.com/twilio/twiliophp',
-      'download url' => 'https://github.com/twilio/twiliophp',
+      'vendor url' => 'https://github.com/twilio/twilio-php',
+      'download url' => 'https://github.com/twilio/twilio-php',
       'version arguments' => array(
         'file' => 'Services/Twilio.php',
-        'pattern' => "/const USER_AGENT = 'twiliophp\/(.*)';/",
+        'pattern' => "/const USER_AGENT = 'twilio-php\/(.*)';/",
         'lines' => 50,
       ),
       'files' => array(
@@ -55,7 +55,7 @@ function twiliophp_requirements($phase) {
       'description' => $t('Please make sure the Twilio API for PHP library is installed in the libraries directory. Use the drush make file for easy installation.'),
     );
   }
-  else if(!$info['version'] || version_compare($info['version'], twiliophp_MINIMUM_VERSION) <= 0) {
+  else if(!$info['version'] || version_compare($info['version'], TWILIO_MINIMUM_VERSION) <= 0) {
     $requirements['twiliophp'] = array(
       'severity' => REQUIREMENT_ERROR,
       'title' => $t('Twilio API'),
