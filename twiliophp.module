@@ -1,7 +1,8 @@
 <?php
 /**
  * @file
- * Provides primary Drupal hook implementations.
+ * Provides primary Drupal hook implementations. Code adapted from the AWS SDK for PHP,
+ * authored by ("boombatower", http://drupal.org/user/214218)
  *
  * @author  Jeremy Sullivan ("jersu", http://drupal.org/user/47878)
  */

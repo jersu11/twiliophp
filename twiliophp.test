@@ -1,7 +1,8 @@
 <?php
 /**
  * @file
- * Provide tests.
+ * Provide tests. Code adapted from the AWS SDK for PHP,
+ * authored by ("boombatower", http://drupal.org/user/214218)
  *
  * @author  Jeremy Sullivan ("jersu", http://drupal.org/user/47878)
  */
