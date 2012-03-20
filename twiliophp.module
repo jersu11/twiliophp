@@ -56,7 +56,7 @@ function twiliophp_requirements($phase) {
       'description' => $t('Please make sure the Twilio API for PHP library is installed in the libraries directory. Use the drush make file for easy installation.'),
     );
   }
-  else if(!$info['version'] || version_compare($info['version'], TWILIO_MINIMUM_VERSION) <= 0) {
+  elseif (!$info['version'] || version_compare($info['version'], TWILIO_MINIMUM_VERSION) <= 0) {
     $requirements['twiliophp'] = array(
       'severity' => REQUIREMENT_ERROR,
       'title' => $t('Twilio API'),
