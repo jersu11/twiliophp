@@ -82,7 +82,7 @@ function twiliophp_requirements($phase) {
 
         // Add link to configuration form if ui is enabled.
         if (module_exists('twiliophp_ui')) {
-          $requirements['twiliophp']['description'] .= ' [' . l(t('configuration'), 'admin/config/media/twiliophp') . ']';
+          $requirements['twiliophp']['description'] .= ' [' . l(t('configuration'), 'admin/config/services/twiliophp') . ']';
         }
       }
     }
